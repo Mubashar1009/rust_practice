@@ -27,4 +27,27 @@ fn main() {
     println!("{:#?}", proper_sentense);
     println!("Min value of i8 {min_value} and Max value of i8 {max_value} {y} {i}");
     println!("checked_add :{:?}", i8::checked_add(i8::MAX, 2));
+
+    //tuple 
+    let tuple : (bool,i32,char) = (false,3,'m');
+    // Nested Tuple 
+let nested_tuple = ((3,2,'c'), 9, ("Mubasher".to_string()));
+ println!("nestedtuple = {}",nested_tuple.2);
+
+ // Array  
+  let arr = [3,4,2,3];
+  //slices
+  let slice =&arr[..3];
+  println!("slice {:?}",slice);
+
+  // String
+  let mut name = String::from("Mubashir");
+   name += " Shakeel";
+   println!("My name:{name}");
+   //&str
+   let s = r#"Mubashir Shakeel
+   BSIT"#;
+   let p = "developer";
+   let msg = format!("{} {}",s,p);
+   println!("{msg}")
 }
