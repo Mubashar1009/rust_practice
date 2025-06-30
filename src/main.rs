@@ -30,6 +30,9 @@ impl Language {
     }
 }
 
+fn addition(a:i32,b:i32) ->i32 {
+    a+b
+}
 fn main() {
     let language = "rust";
     let mut x = 1;
@@ -159,4 +162,25 @@ fn main() {
             Ok(x) => println!("{x}"),
             Err(msg) => println!("{msg}")
         }
-}
+
+    // if let (it works like this match x {
+      //  Some(x) => println!("{x} Some"),
+      //  None =>
+       //  println!("None")
+//    })
+let v  = Some(3) ;
+    if let Some(x) = v {
+        println!("{x} is some ");
+    }
+    let  Some(x) = v else  {
+        // here code must be return or diverge (panic)
+     return 
+    };
+
+// Function 
+let a = 3 ;
+let b = 4; 
+    let x   = addition (a,b);
+    println!("Add {a} {b} = {x}")
+ }
+
