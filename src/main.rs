@@ -1,5 +1,6 @@
 #![allow(unused)]
 #[derive(Debug, PartialEq)]
+
 // enum Color {
 //     Red,
 //     Green,
@@ -30,9 +31,42 @@ impl Language {
     }
 }
 
-fn addition(a:i32,b:i32) ->i32 {
-    a+b
+#[derive(Debug)]
+enum AdditonError {
+    NotAdd
 }
+
+impl std::fmt::Display for AdditonError {
+    fn fmt(&self,f:&mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f,"match error {:#?}",self)
+    }
+}
+
+#[derive(Debug)]
+enum SubstrictionError {
+    NotSubstriction
+}
+
+impl std::fmt::Display for SubstrictionError {
+    fn fmt(&self,f:&mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f,"match error {:#?}",self)
+    }
+}
+impl std::error::Error for AdditonError {}
+impl std::error::Error for SubstrictionError {}
+fn addition(a:i32,b:i32) ->Result<i32,AdditonError> {
+   Ok(a+b)
+}
+fn substriction(a:i32,b:i32) ->Result<i32,SubstrictionError> {
+    Err(SubstrictionError::NotSubstriction)
+ }
+ fn total () ->Result<i32,Box<dyn std::error::Error>> {
+    // ? operator handle error automatically 
+    let x = addition(3,4)?;
+    let y  = substriction(4,3)?;
+    Ok(x * y )
+    
+ }
 fn main() {
     let language = "rust";
     let mut x = 1;
@@ -180,7 +214,11 @@ let v  = Some(3) ;
 // Function 
 let a = 3 ;
 let b = 4; 
-    let x   = addition (a,b);
-    println!("Add {a} {b} = {x}")
+    let x   = total();
+    match x {
+        Ok(y) => println!("Add {a} {b} = {y}"),
+        Err(error) => println!("{error}")
+    }
+    
  }
 
