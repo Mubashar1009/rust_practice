@@ -219,6 +219,21 @@ let b = 4;
         Ok(y) => println!("Add {a} {b} = {y}"),
         Err(error) => println!("{error}")
     }
-    
+  // stack (know data of fixed size on compiler time, LIFO )
+  // heap (know data of unknown size on compiler time ,example is vector it's size can be shrink or expand on compiler time , managed data by onwner ship or borrowing )
+   // Ownership (when owner goes out of the scope, then it's value dropped for example )
+   let s = String::from("Mubashir");
+   if (true) {
+    s;
+   }
+  // println!("{s}") // it will throw error because value dropped if we return value from function and save it to other variable then ownership returns 
+  // In Rust, we can only have one mutable reference to a variable at a time.
+// If we try to create multiple mutable references simultaneously, it will cause a compile-time error.
+// A mutable reference allows modifying the original value, but only one can exist at a time to ensure safety. if we use two then rust will work to those which will use 
+// we can not create mutable and immutable refrence at the same time 
+//   fn (s:String) -> &String {
+//     &s 
+//   } this will not work because s value will be dropped and we are trying to return that value refrence which is dropped 
+// rust is smart it can convert refrence of String to str or str to String
  }
 
