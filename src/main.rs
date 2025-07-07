@@ -1,5 +1,8 @@
 #![allow(unused)]
+use std::collections::HashMap;
+use std::collections::HashSet;
 #[derive(Debug, PartialEq)]
+
 
 // enum Color {
 //     Red,
@@ -35,38 +38,8 @@ impl Language {
 enum AdditonError {
     NotAdd
 }
+use rust_project::module1;
 
-impl std::fmt::Display for AdditonError {
-    fn fmt(&self,f:&mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f,"match error {:#?}",self)
-    }
-}
-
-#[derive(Debug)]
-enum SubstrictionError {
-    NotSubstriction
-}
-
-impl std::fmt::Display for SubstrictionError {
-    fn fmt(&self,f:&mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f,"match error {:#?}",self)
-    }
-}
-impl std::error::Error for AdditonError {}
-impl std::error::Error for SubstrictionError {}
-fn addition(a:i32,b:i32) ->Result<i32,AdditonError> {
-   Ok(a+b)
-}
-fn substriction(a:i32,b:i32) ->Result<i32,SubstrictionError> {
-    Err(SubstrictionError::NotSubstriction)
- }
- fn total () ->Result<i32,Box<dyn std::error::Error>> {
-    // ? operator handle error automatically 
-    let x = addition(3,4)?;
-    let y  = substriction(4,3)?;
-    Ok(x * y )
-    
- }
 fn main() {
     let language = "rust";
     let mut x = 1;
@@ -214,26 +187,53 @@ let v  = Some(3) ;
 // Function 
 let a = 3 ;
 let b = 4; 
-    let x   = total();
-    match x {
-        Ok(y) => println!("Add {a} {b} = {y}"),
-        Err(error) => println!("{error}")
+    // let x   = addition (a,b);
+    println!("Add {a} {b} = {x}");
+    module1::first_function();
+    let x  = [3,4,5];
+    // Error Handling 
+    let get_element = x.get(1);
+    match get_element {
+        Some(value) => println!("{value} is present"),
+        None => println!("there is no value at this index")
     }
-  // stack (know data of fixed size on compiler time, LIFO )
-  // heap (know data of unknown size on compiler time ,example is vector it's size can be shrink or expand on compiler time , managed data by onwner ship or borrowing )
-   // Ownership (when owner goes out of the scope, then it's value dropped for example )
-   let s = String::from("Mubashir");
-   if (true) {
-    s;
-   }
-  // println!("{s}") // it will throw error because value dropped if we return value from function and save it to other variable then ownership returns 
-  // In Rust, we can only have one mutable reference to a variable at a time.
-// If we try to create multiple mutable references simultaneously, it will cause a compile-time error.
-// A mutable reference allows modifying the original value, but only one can exist at a time to ensure safety. if we use two then rust will work to those which will use 
-// we can not create mutable and immutable refrence at the same time 
-//   fn (s:String) -> &String {
-//     &s 
-//   } this will not work because s value will be dropped and we are trying to return that value refrence which is dropped 
-// rust is smart it can convert refrence of String to str or str to String
+    // alternative method 
+    let result = get_element.expect("there is no element");
+    println!("{result} is ");
+    // slice are the refrence of the collection 
+    let arr = [1,2,3,4,5];
+    fn slice_arr(u:&[i32],i:usize)->(&[i32],&[i32]) {
+           (  &u[0.. i],&u[i..] )
+    }
+    let (a,b) = slice_arr(&arr,2);
+    println!("{:#?}",a);
+    //Dereferencing is accessing the value that a reference points to. This is done using *
+    let x = 3 ;
+    let y = &x;
+    let z = &x;
+    let yz = *y+*z;
+    println!("{yz} {x}");
+    // vector are those which size can be shrink or extend on compiler time 
+    let v = vec![1u8;5];  // here by using first item with type vector can understand that all items will be of u8;
+    let mut  v = Vec::new(); // it create empty vector 
+
+    let x = v.get(0); // it give options 
+    // for adding and updating we need to convert vector into mutable 
+         v.push(3);
+         v[0] = 2; // update vector value 
+         println!("{:#?}",v);
+         //Hashmap key value pair 
+          let mut score = HashMap::new();
+          score.insert("red".to_string(),200);
+           score.insert("green".to_string(),210 );
+           let get_score = score.get("red"); // it work on refrence 
+           let v = score.entry("blue".to_string()).or_insert(300);
+           *v = 55;
+           // HashSet insert unique values and give boolean value if present or not a give number 
+           let mut unique = HashSet::new();
+           let boolean = unique.insert(3);
+           println!("{boolean}");
+                 let boolean = unique.insert(3);
+           println!("{boolean}");
  }
 
