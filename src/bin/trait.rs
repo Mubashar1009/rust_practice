@@ -1,5 +1,5 @@
 #![allow(unused)]
-
+use std::fmt;
 #[derive(Debug, PartialEq)]
 struct Score {
     score:i32
@@ -10,6 +10,7 @@ struct Points {
 }
 #[derive(Debug, PartialEq)]
 struct Dog;
+#[derive(Debug, PartialEq)]
 struct Cat;
 //Traits in Rust are like interfaces in other languages (e.g., Java or TypeScript)  If a type implements this trait, it must provide these methods.
 trait Compiler { // here we can use only simple calling function wit return type without any inner function code 
@@ -38,10 +39,11 @@ impl Compiler for Points {
 fn compiler_dyn(lang:&impl Compiler,file_name:&str){
     return lang.compiler(file_name)
 }
-trait Animal { // here we can use only simple calling function wit return type without any inner function code 
+
+trait Animal : fmt::Debug { // here we can use only simple calling function wit return type without any inner function code 
     // if we does not add inner function code for any struct then it would run this trait's inner function 
     fn animal(&self){
-    println!("Dynamic Animal")
+    println!("Dynamic Animal");
         
     }
 }
@@ -71,11 +73,11 @@ fn main() {
        let a = Score{
         score : 32
        };
-       let b = Points {
+       let _b = Points {
         points : 10
        };
        println!("{:#?}",compiler(&a, "score"));
-      let a   = condition(33);
-      println!("{:#?}",a);
+      let _a   = condition(33);
+      _a.animal()
      
 }
