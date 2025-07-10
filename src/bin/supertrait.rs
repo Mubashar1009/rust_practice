@@ -48,6 +48,20 @@ struct Point<T  = i32> {
     p : T,
     s : T,
 }
+fn sum<T: std::ops::Add<E, Output = E>,E>(a:T,b:E)->E {
+    a+b
+}
+// Generic Traits 
+
+trait GenericTraits<T> {
+    fn sum(&self)->&T;
+}
+impl<T> GenericTraits<T> for (T,T) {
+  fn   sum(&self)->&T {
+        &self.0
+    }
+}
+
 fn main () {
     let rust  = Rust;
     rust.execute("hello.ts");
@@ -59,5 +73,11 @@ fn main () {
         p: "string".to_string(),
         s : "string".to_string()
     };
-    println!("{:?}",point)
+    println!("{:?}",point);
+    let a = sum(3,3);
+    println!("Sum {a}");
+    // monomorphization when we give different types to generic data type 
+     let a = (32,32);
+    let b =  a.sum();
+     println!("Generic Traits {b}");
 }
