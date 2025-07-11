@@ -1,5 +1,6 @@
 #![allow(unused)]
 
+use std::convert::{From,Into};
 trait Language {
     fn name(&self) -> String;
 }
@@ -36,6 +37,19 @@ impl CompilerLanguage for Rust {
     // here we does not change execute function then it will work as defualt inilitation 
 }
 
+impl From<String> for Rust {
+    fn from (value:String) -> Self {
+        // Self refer to Rust 
+        Self 
+    }
+}
+
+// New function to demonstrate `into`
+fn into_usage() {
+    let a: Rust = "Mubashir".to_string().into(); 
+    println!("Converted using into(): {:#?}", a);
+}
+
 // Generic data type 
 
 enum Result<T,E> {
@@ -62,6 +76,23 @@ impl<T> GenericTraits<T> for (T,T) {
     }
 }
 
+// Trait bounds 
+trait A {
+
+}
+trait B {} 
+
+
+impl A for u32 {}
+impl A for i32 {}
+impl B for u32 {}
+// These are the example of static disaptch 
+fn c<T:A>(value:T) {
+
+}
+
+fn size<T:Sized>(value:T) {}
+fn unsize<T:?Sized>(value:&T) {}
 fn main () {
     let rust  = Rust;
     rust.execute("hello.ts");
@@ -80,4 +111,38 @@ fn main () {
      let a = (32,32);
     let b =  a.sum();
      println!("Generic Traits {b}");
-}
+     // From and Into
+    
+   let a =  Rust::from("Mubashir".to_string());
+   println!("Name {:#?}",a);
+ 
+   into_usage();
+   // Trait bounds 
+   let a: u32 = 3;
+   let b : i32= -3;
+   c(a);
+   c(b);
+   // Sized
+//    Sized is known at compiler time 
+//    Automatically implemented for permitive datatypes 
+//    Necessary for allocating values for the stack 
+ let a = 3 ;
+ let arr = [3,4,2];
+ size(a);
+ size(arr);
+ size(&arr); // because it's size is known at compiler time 
+   // ? Sized 
+//    Sized may not be known at compiler time 
+//    Examples dynamically sized types, slices and trait objects ,dynamic traits too 
+
+let slice = &[3,2,1];
+unsize(slice);
+// Static dispatch 
+//function to call  known on compiler time 
+// code size can be larger 
+// no run time cost 
+// Dynamic Dispatch 
+// function to known on run time 
+// run time cost 
+
+} 

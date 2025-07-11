@@ -59,7 +59,7 @@ impl Animal for Dog {
        println!("Dog");
    }
 }
-
+// this is the example of Dynamic disaptch we can use refrence too instead of box but in main function due to box owner can be trnasfer to function after calling function in refrence it does not happen 
     fn condition(rand:u32)->Box<dyn Animal>{
        if rand > 32 {
         Box::new(Cat)
