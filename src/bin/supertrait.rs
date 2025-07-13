@@ -1,5 +1,5 @@
 #![allow(unused)]
-
+use std::ops::Add;
 use std::convert::{From,Into};
 trait Language {
     fn name(&self) -> String;
@@ -93,6 +93,35 @@ fn c<T:A>(value:T) {
 
 fn size<T:Sized>(value:T) {}
 fn unsize<T:?Sized>(value:&T) {}
+
+// generic trait and associated trait 
+//  an associated type is a placeholder type defined inside a trait. Instead of making the trait generic over some type, you define that type inside the trait, and then each implementation of the trait specifies what that type is.
+// Associated types help avoid generic parameters cluttering up everything. They make traits easier to read and use.
+// Associated trait are used for one implemeantion of one data type for example we can not implement same trait for array if we have defined it before but in generic traits we can do it 
+
+trait AssociatedTrait {
+         type Item; 
+         fn sum (&mut self)->Option<Self::Item>;
+}
+impl AssociatedTrait for Rust {
+     type Item  = bool;
+      fn sum (&mut self)->Option<bool> {
+        Some(true)
+      }
+}
+
+// overloading means we can know use assicated trait for different datatypes 
+impl<T> Add for Point<T> where T:Add<Output=T> {
+    type Output = Self;
+
+    fn add(self, other: Self) -> Self {
+        Point {
+            p: self.p + other.p,
+            s: self.s + other.s,
+        }
+
+    }
+}
 fn main () {
     let rust  = Rust;
     rust.execute("hello.ts");
@@ -144,5 +173,15 @@ unsize(slice);
 // Dynamic Dispatch 
 // function to known on run time 
 // run time cost 
-
+  // Overload 
+  let point =Point {
+     p : 3,
+     s : 4,
+  };
+  let points = Point {
+    p : 4,
+    s: 3
+  };
+     let addition = point + points;
+     println!("Additon {:#?}",addition);
 } 
