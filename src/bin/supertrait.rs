@@ -1,4 +1,5 @@
 #![allow(unused)]
+use std::collections::HashMap;
 use std::ops::Add;
 use std::convert::{From,Into};
 trait Language {
@@ -184,4 +185,29 @@ unsize(slice);
   };
      let addition = point + points;
      println!("Additon {:#?}",addition);
+     // Iter - borrows and return a iterator that return &T
+     // Into_Iter - takes ownership and return a iterator that return &T or T or &mut T 
+     // Into Iter when we run a for in loop on a vector then ownership transfer so we can not use that vector again but if we use .iter() with it then we can use it 
+    // iter_mut() - return &mut T
+      let mut  functions  = vec![3,1,2,4];
+        for v in functions.iter_mut() {
+             *v += 1;
+             println!("v {}",v);
+        }
+     // filter and map 
+     let functions  = vec![3,1,2,4];
+     let data  : Vec<i32>= functions.into_iter().filter(|x| *x >=2).map(|x| 2*x).collect();
+     println!("Map and filter {:?}",data);
+     //zip 
+       let functions  = vec![3,1,2,4];
+       let array = vec!["a","b","c"];
+       let data : Vec<String> = array.iter().map(|x| x.to_string()).collect();
+       let zipped: HashMap<String,i32> = data.into_iter().zip(functions.into_iter()).collect();
+            println!("Zipped {:?}",zipped);
+        let sum = vec![3,21,2];
+        // folding is just like a reduce method in javascript 
+
+        let folding  = sum.iter().fold(0,|acc,x| acc+x);
+        println!("folding {}",folding);
+
 } 
