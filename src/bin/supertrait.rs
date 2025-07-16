@@ -123,6 +123,25 @@ impl<T> Add for Point<T> where T:Add<Output=T> {
 
     }
 }
+// A lifetime is the time during which a reference is valid. if any one variable is invalid then it throw error  
+fn lifetime<'a> ( x : &'a str,  y:&'a str) ->&'a str {
+           if x.len() > y.len() {
+            x
+           }
+           else 
+           {
+            y
+           }
+}
+// Pointer function 
+fn push(v:&mut Vec<u32>,x:u32)->&mut Vec<u32> {
+  let a =   v.push(x);
+   v
+}
+fn adding(f:fn(&mut Vec<u32>,u32)->&mut Vec<u32>,v:& mut Vec<u32>,x:u32) ->&mut  Vec<u32> {
+      let a =  f(v,x);
+      a
+}
 fn main () {
     let rust  = Rust;
     rust.execute("hello.ts");
@@ -209,5 +228,23 @@ unsize(slice);
 
         let folding  = sum.iter().fold(0,|acc,x| acc+x);
         println!("folding {}",folding);
-
+     // Pointer Refrence 
+     let mut v : Vec<u32> = vec![3,2,1];
+     adding(push,&mut v,4);
+     println!("Adding {:?}",v);
+     // Closure - anonymous function  + capture variable in the environment 
+     // let suppose we are creating a function 
+     fn one_function ( x: u32,y:u32) -> u32 {
+        x+y
+     };
+     // the above function can write as anonymous function in such a way
+     let anonymous_function = |x:u32,y:u32| ->u32 {
+        x + y
+     }; 
+     // we can write above function in such a way 
+     let anonymous_function = |x,y| x+y;
+     // rust is smart it can know type of it when we wil call this function but it works only for i32 not all data types 
+     let z: i32 = anonymous_function(3,4);
+     println!("{}",z);
+     // by creating anonymous function we can use variables of the environment and can assign same function to other variable but if we have call function with one data type then we can not call with other data type 
 } 
