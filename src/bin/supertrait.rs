@@ -142,6 +142,21 @@ fn adding(f:fn(&mut Vec<u32>,u32)->&mut Vec<u32>,v:& mut Vec<u32>,x:u32) ->&mut 
       let a =  f(v,x);
       a
 }
+
+// fn(),
+fn function<F:Fn()>(f:F) {
+    f();
+}
+// fnMut()
+fn functionMut<F:FnMut()>(mut f:F) {
+    f();
+}
+// fnOnce()
+fn functionOnce<F:FnOnce()>(f:F) {
+    f();
+}
+
+
 fn main () {
     let rust  = Rust;
     rust.execute("hello.ts");
@@ -247,4 +262,23 @@ unsize(slice);
      let z: i32 = anonymous_function(3,4);
      println!("{}",z);
      // by creating anonymous function we can use variables of the environment and can assign same function to other variable but if we have call function with one data type then we can not call with other data type 
-} 
+    // Closure : 
+    // closure can take refrence,mutable refrence or can tak ownership of the variable 
+// borrow  immutable refrence 
+    let s = "Moon".to_string();
+    let f = || println!("{}",s);
+    f();
+    println!("{}",s);
+    // here take ownership 
+    let s = "Moon".to_string();
+    let f = move || println!("{}",s);
+       // 
+       let mut s = "Mubashir".to_string();
+       let f = || println!("here is function calling {}",s);
+       function(f);
+       let f = || println!("here is function Mut calling {}",s);
+       functionMut(f);
+       let f = move || println!("here is function Once calling {}",s);
+       functionMut(f);
+
+    } 
