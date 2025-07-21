@@ -126,4 +126,29 @@ fn main() {
 
         println!("{:?}",Rc::strong_count(&v1));
         //if Rc::strong_count() is equal to zero 
+        let a = String::from("Moon");
+        let b = Rc::new(a);
+        let w1 = Rc::downgrade(&b);
+        println!("---w1---");
+        println!("Strong count {}",Rc::strong_count(&b));
+        println!("Weak count {} ",Rc::weak_count(&b));
+        println!("{:?}",w1);
+        let w1 = Rc::downgrade(&b);
+        println!("---w1---");
+        println!("Strong count {}",Rc::strong_count(&b));
+        println!("Weak count {} ",Rc::weak_count(&b));
+        println!("{:?}",w1);
+        let u = w1.upgrade();
+        println!("---w1---upgrade");
+        println!("Strong count {}",Rc::strong_count(&b));
+        println!("Weak count {} ",Rc::weak_count(&b));
+        println!("{:?}",u);
+        std::mem::drop(u);
+        std::mem::drop(b);
+        let u = w1.upgrade();
+        println!("---w1---upgrade-after drop");
+        println!("{:?}",u);
+
+
+
   }
