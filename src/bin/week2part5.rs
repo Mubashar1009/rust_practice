@@ -13,9 +13,9 @@ fn main () {
     println!("Hi i am learning about ? operator");
     // ? operator used in mostly Result or Options to minimize and clean code 
     // unwrap() is used when there is 100% sure that there is no error otherwise we should not use it 
-    let file = "output.txt";
+    let file = "src/bin/output.txt";
     let _contents = match reading_file(file) {
         Ok(data) => println!("data {data}"),
-        Err(r) =>println!("{r}"),
+        Err(r) =>println!("There is error {r}"),
     };
 } 
