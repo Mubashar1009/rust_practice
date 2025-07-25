@@ -1,6 +1,21 @@
 #[allow(unused)]
-
+use thiserror::Error;
+use std::io;
 use::std::{fs::File,io::{Error,Read}};
+
+#[derive(Debug,Error)]
+pub enum MyError {
+    #[error("Internal Server Error")]
+    ServerError,
+    #[error("Validation Error filed_name: {} Failer: {}",.field_name,.failer_str)]
+    ValidationError {
+        field_name : String,
+        failer_str : String,
+    },
+    #[error("Network Error {}",.0)]
+    NetworkError(io::Error)
+}
+
 
 fn reading_file(path:&str) ->Result<String,Error> {
       let mut file = File::open(path)?;
@@ -18,4 +33,10 @@ fn main () {
         Ok(data) => println!("data {data}"),
         Err(r) =>println!("There is error {r}"),
     };
+    println!("{}",MyError::ServerError);
+    println!(" {}",MyError::ValidationError{
+        field_name : "username".to_string(),
+        failer_str : "username can not be empty".to_string()
+    });
+    println!("{}", MyError::NetworkError(std::io::Error::new(std::io::ErrorKind::ConnectionReset,"Network Error")));
 } 
