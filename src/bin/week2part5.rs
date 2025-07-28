@@ -2,7 +2,8 @@
 use thiserror::Error;
 use std::io;
 use::std::{fs::File,io::{Error,Read}};
-
+use anyhow::{Context, Result};
+use anyhow::anyhow;
 #[derive(Debug,Error)]
 pub enum MyError {
     #[error("Internal Server Error")]
@@ -17,10 +18,10 @@ pub enum MyError {
 }
 
 
-fn reading_file(path:&str) ->Result<String,Error> {
-      let mut file = File::open(path)?;
+fn reading_file(path:&str) ->Result<String> {
+      let mut file = File::open(path).context("file is not present ")?;
       let mut content = String::new();
-      file.read_to_string(&mut content)?;
+      file.read_to_string(&mut content).with_context(||  anyhow!("Something went wrong "))?;
       Ok(content)
 }
 
@@ -31,7 +32,7 @@ fn main () {
     let file = "src/bin/output.txt";
     let _contents = match reading_file(file) {
         Ok(data) => println!("data {data}"),
-        Err(r) =>println!("There is error {r}"),
+        Err(r) =>println!("There is error {:?}",r),
     };
     println!("{}",MyError::ServerError);
     println!(" {}",MyError::ValidationError{
