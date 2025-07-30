@@ -1,3 +1,4 @@
+#![allow(unused)]   
 pub fn add(left: u64, right: u64) -> u64 {
     left + right
 }
@@ -22,6 +23,9 @@ mod tests {
         assert_eq!(result, 4);
     }
      #[test]
+     // here we use this should_panic when we want that this test should be panic
+     // for providing custom panic message we pass as expect 
+     #[should_panic(expected = "This function should be panic")]
     fn panic() {
        panic!("test fail");
     }
@@ -35,6 +39,7 @@ mod tests {
         width : 3,
         height : 2
        };
-       assert!(larger.check(&smaller));
+       // writing custom message is the second arugment of the assert!,Note:it's upto you pass second arugment or not 
+       assert!(Rectangle::check(&larger,&smaller),"This is not possible ");
     }
 }
