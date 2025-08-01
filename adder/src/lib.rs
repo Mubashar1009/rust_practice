@@ -26,6 +26,7 @@ mod tests {
      // here we use this should_panic when we want that this test should be panic
      // for providing custom panic message we pass as expect 
      #[should_panic(expected = "This function should be panic")]
+     #[ignore]
     fn panic() {
        panic!("test fail");
     }
@@ -42,4 +43,8 @@ mod tests {
        // writing custom message is the second arugment of the assert!,Note:it's upto you pass second arugment or not 
        assert!(Rectangle::check(&larger,&smaller),"This is not possible ");
     }
+    // to run serially testing run: cargo test -- --test-threads=1
+    // to show output of the all test(like println!) run: cargo test -- --show-output
+    // for running subtest run: cargo test test_name_or_test_initials
+    // to run all test except ignore run: cargo test -- --ignored
 }
