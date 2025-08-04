@@ -5,7 +5,6 @@ use std::env;
 
 #[derive(Debug, PartialEq)]
 
-
 // enum Color {
 //     Red,
 //     Green,
@@ -38,13 +37,11 @@ impl Language {
 
 #[derive(Debug)]
 enum AdditonError {
-    NotAdd
+    NotAdd,
 }
 use rust_project::module1;
 
 fn main() {
-    let args = env::args().collect();
-    println!("args {}",args);
     let language = "rust";
     let mut x = 1;
     // Integers
@@ -141,7 +138,7 @@ fn main() {
         println!("{i} in loop")
     }
     //  vectors and iter
-    // iter is immutable refrence and it is only read only withoug using this ownership transfer 
+    // iter is immutable refrence and it is only read only withoug using this ownership transfer
     let vec = vec![2, 3, 1];
     for i in vec.iter() {
         println!("{i} vector with iter");
@@ -154,90 +151,88 @@ fn main() {
             }
         }
     }
-    // Match 
+    // Match
     let x = 4;
-   let assign_match_value =  match x {
-       i @  1 ..3 => i,
-        _ => 3
+    let assign_match_value = match x {
+        i @ 1..3 => i,
+        _ => 3,
     };
-    println!("{:#?}", assign_match_value );
-    // Some 
-    let x  = Some(3);
+    println!("{:#?}", assign_match_value);
+    // Some
+    let x = Some(3);
     match x {
         Some(x) => println!("{x} Some"),
-        None =>
-         println!("None")
+        None => println!("None"),
     }
-        let x : Result <i32,String>  = Ok(3);
-        match x {
-            Ok(x) => println!("{x}"),
-            Err(msg) => println!("{msg}")
-        }
+    let x: Result<i32, String> = Ok(3);
+    match x {
+        Ok(x) => println!("{x}"),
+        Err(msg) => println!("{msg}"),
+    }
 
     // if let (it works like this match x {
-      //  Some(x) => println!("{x} Some"),
-      //  None =>
-       //  println!("None")
-//    })
-let v  = Some(3) ;
+    //  Some(x) => println!("{x} Some"),
+    //  None =>
+    //  println!("None")
+    //    })
+    let v = Some(3);
     if let Some(x) = v {
         println!("{x} is some ");
     }
-    let  Some(x) = v else  {
+    let Some(x) = v else {
         // here code must be return or diverge (panic)
-     return 
+        return;
     };
 
-// Function 
-let a = 3 ;
-let b = 4; 
+    // Function
+    let a = 3;
+    let b = 4;
     // let x   = addition (a,b);
     println!("Add {a} {b} = {x}");
     module1::first_function();
-    let x  = [3,4,5];
-    // Error Handling 
+    let x = [3, 4, 5];
+    // Error Handling
     let get_element = x.get(1);
     match get_element {
         Some(value) => println!("{value} is present"),
-        None => println!("there is no value at this index")
+        None => println!("there is no value at this index"),
     }
-    // alternative method 
+    // alternative method
     let result = get_element.expect("there is no element");
     println!("{result} is ");
-    // slice are the refrence of the collection 
-    let arr = [1,2,3,4,5];
-    fn slice_arr(u:&[i32],i:usize)->(&[i32],&[i32]) {
-           (  &u[0.. i],&u[i..] )
+    // slice are the refrence of the collection
+    let arr = [1, 2, 3, 4, 5];
+    fn slice_arr(u: &[i32], i: usize) -> (&[i32], &[i32]) {
+        (&u[0..i], &u[i..])
     }
-    let (a,b) = slice_arr(&arr,2);
-    println!("{:#?}",a);
+    let (a, b) = slice_arr(&arr, 2);
+    println!("{:#?}", a);
     //Dereferencing is accessing the value that a reference points to. This is done using *
-    let x = 3 ;
+    let x = 3;
     let y = &x;
     let z = &x;
-    let yz = *y+*z;
+    let yz = *y + *z;
     println!("{yz} {x}");
-    // vector are those which size can be shrink or extend on compiler time 
-    let v = vec![1u8;5];  // here by using first item with type vector can understand that all items will be of u8;
-    let mut  v = Vec::new(); // it create empty vector 
+    // vector are those which size can be shrink or extend on compiler time
+    let v = vec![1u8; 5]; // here by using first item with type vector can understand that all items will be of u8;
+    let mut v = Vec::new(); // it create empty vector 
 
     let x = v.get(0); // it give options 
-    // for adding and updating we need to convert vector into mutable 
-         v.push(3);
-         v[0] = 2; // update vector value 
-         println!("{:#?}",v);
-         //Hashmap key value pair 
-          let mut score = HashMap::new();
-          score.insert("red".to_string(),200);
-           score.insert("green".to_string(),210 );
-           let get_score = score.get("red"); // it work on refrence 
-           let v = score.entry("blue".to_string()).or_insert(300);
-           *v = 55;
-           // HashSet insert unique values and give boolean value if present or not a give number 
-           let mut unique = HashSet::new();
-           let boolean = unique.insert(3);
-           println!("{boolean}");
-                 let boolean = unique.insert(3);
-           println!("{boolean}");
- }
-
+    // for adding and updating we need to convert vector into mutable
+    v.push(3);
+    v[0] = 2; // update vector value 
+    println!("{:#?}", v);
+    //Hashmap key value pair
+    let mut score = HashMap::new();
+    score.insert("red".to_string(), 200);
+    score.insert("green".to_string(), 210);
+    let get_score = score.get("red"); // it work on refrence 
+    let v = score.entry("blue".to_string()).or_insert(300);
+    *v = 55;
+    // HashSet insert unique values and give boolean value if present or not a give number
+    let mut unique = HashSet::new();
+    let boolean = unique.insert(3);
+    println!("{boolean}");
+    let boolean = unique.insert(3);
+    println!("{boolean}");
+}
