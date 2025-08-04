@@ -1,6 +1,8 @@
 #![allow(unused)]
 use std::collections::HashMap;
 use std::collections::HashSet;
+use std::env;
+
 #[derive(Debug, PartialEq)]
 
 
@@ -41,6 +43,8 @@ enum AdditonError {
 use rust_project::module1;
 
 fn main() {
+    let args = env::args().collect();
+    println!("args {}",args);
     let language = "rust";
     let mut x = 1;
     // Integers
